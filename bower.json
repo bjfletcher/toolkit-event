@@ -1,0 +1,17 @@
+{
+  "name": "pm-toolkit-event",
+  "version": "0.0.1",
+  "homepage": "https://github.com/peter-mouland/toolkit-event",
+  "authors": [
+    "Peter Mouland <peter.mouland@gmail.com>"
+  ],
+  "description": "A collection of brand approved buttons for use across Sky.com",
+  "license": "MIT",
+  "ignore": [
+    "**/*",
+    "!src/scss/**/*",
+    "!src/js/**/*"
+  ],
+  "devDependencies": {
+  }
+}

@@ -1,0 +1,11 @@
+name: Toolkit Event
+version: 0.0.1
+port: 4000
+source: demo
+exclude: scss
+
+assets:
+  js_compressor:
+  css_compressor:
+  cache: true
+  cachebust: none
