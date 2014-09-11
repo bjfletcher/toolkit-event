@@ -1,6 +1,8 @@
+
 var timeout = {
     resize : null
 };
+
 var state = {    };
 var browserSpecificEvents = {
     'transitionend' : check('transition','end'),
@@ -38,9 +40,9 @@ function emitResizeEnd(){
     if (typeof $ !== 'undefined'){
         $(window).trigger('resizeend'); // jQuery version
     }
-}
+};
 
-function on(el, eventName, exec){
+export function on(el, eventName, exec){
     var browserSpecificEventName = browserSpecificEvents[eventName.toLowerCase()];
     eventName = browserSpecificEventName ||  eventName;
     if (el.addEventListener) {
@@ -48,18 +50,19 @@ function on(el, eventName, exec){
     } else {
         el.attachEvent(eventName, exec);
     }
-}
+};
 
-function off(el, eventName, exec) {
+export function off(el, eventName, exec) {
     var browserSpecificEventName = browserSpecificEvents[eventName.toLowerCase()];
     eventName = browserSpecificEventName ||  eventName;
-    if (el.removeEventListener)
+    if (el.removeEventListener) {
         el.removeEventListener(eventName, exec, false);
-    else
+    } else {
         el.detachEvent('on' + eventName, exec);
-}
+    }
+};
 
-function emit(el, eventName) {
+export function emit(el, eventName) {
     var event;
     if (document.createEvent) {
         event = document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
@@ -69,22 +72,14 @@ function emit(el, eventName) {
         event = document.createEventObject();
         el.fireEvent('on' + eventName, event);
     }
-}
+};
 
-function ready(exec){
+export function ready(exec){
     if (/in/.test(document.readyState)){
         setTimeout(function(){ ready(exec); },9);
     } else {
         exec();
     }
-}
+};
 
 bindEvents();
-
-
-export {
-    on,
-    off,
-    emit,
-    ready
-};

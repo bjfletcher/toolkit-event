@@ -9,6 +9,14 @@
 
 {{ content }}
 
-    <script src="js/event.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.14/require.min.js" ></script>
+<script>
+    require(['js/amd/event'], function(event){
+        console.log(event);
+    })
+</script>
+
+<!--<script src="js/common/event.solo.js" ></script>-->
+
 </body>
 </html>

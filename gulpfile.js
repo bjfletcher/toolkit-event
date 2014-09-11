@@ -7,7 +7,7 @@ var prefix = require('gulp-autoprefixer');
 var childProcess = require('child_process');
 var runSequence = require('run-sequence');
 var deploy = require("gulp-gh-pages");
-var es6ModuleTranspiler = require("gulp-es6-module-transpiler");
+var traceur = require('gulp-traceur');
 
 var paths= {
     "deploy-remote": "origin",
@@ -59,13 +59,31 @@ gulp.task('sass', function() {
         .pipe(browserSync.reload({stream:true}));
 });
 
-gulp.task('js', function() {
+gulp.task('js-amd', function() {
     gulp.src(paths.js + "/**/*.js")
-        .pipe(es6ModuleTranspiler({
-            type: "cjs"//amd
+        .pipe(traceur({
+            modules: "amd"
         }))
-        .pipe(gulp.dest(paths['compiled-js']));
+        .pipe(gulp.dest(paths['compiled-js'] + '/amd'));
 });
+
+gulp.task('js-common', function() {
+    gulp.src(paths.js + "/**/*.js")
+        .pipe(traceur({
+            modules: "commonjs"
+        }))
+        .pipe(gulp.dest(paths['compiled-js'] + '/common'));
+});
+
+
+gulp.task('js', function(callback) {
+    return runSequence(
+        ['js-amd', 'js-common'],
+        callback
+    );
+});
+
+
 
 gulp.task('browserSync', function() {
     browserSync({
